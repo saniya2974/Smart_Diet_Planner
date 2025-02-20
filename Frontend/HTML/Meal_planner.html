@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Finder</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+        .logo {
+            font-size: 40px;
+            font-weight: bold;
+            color: #4285F4;
+            margin-top: 80px;
+        }
+        .dark-mode-toggle {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+        .search-container {
+            width: 500px;
+            max-width: 90%;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            outline: none;
+            transition: box-shadow 0.2s ease-in-out;
+        }
+        input:focus {
+            box-shadow: 0 0 8px rgba(66, 133, 244, 0.5);
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            background-color: #f8f9fa;
+            border: 1px solid #dfe1e5;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: #dfe1e5;
+            transform: scale(1.05);
+        }
+        select, #recipeResult, #recipeSteps {
+            margin-top: 20px;
+            font-size: 16px;
+            text-align: center;
+        }
+        .dark-mode {
+            background-color: #202124;
+            color: white;
+        }
+        .recipe-image {
+            width: 100%;
+            max-width: 300px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    <div class="logo">Recipe Finder</div>
+    <div class="search-container">
+        <input type="text" id="ingredient" placeholder="Enter an ingredient" onkeyup="showSuggestions(event)" onkeypress="if(event.key === 'Enter') suggestRecipes()">
+        <div id="suggestions" style="text-align: left; font-size: 14px; color: gray;"></div>
+        <div class="buttons">
+            <button onclick="suggestRecipes()">Find Recipes</button>
+        </div>
+        <select id="recipeList" onchange="showRecipeDetails()" style="display: none;"></select>
+        <img id="recipeImage" class="recipe-image" style="display: none;" />
+        <p id="recipeResult"></p>
+        <p id="recipeSteps"></p>
+    </div>
+    <script>
+        const recipes = {
+            "egg": { "Omelette": { steps: "1. Beat eggs.\n2. Heat pan and add butter.\n3. Pour eggs and cook until firm.", image: "omelette.jpg" }, "Scrambled Eggs": { steps: "1. Beat eggs and add milk.\n2. Heat butter in pan.\n3. Cook eggs while stirring.", image: "scrambled.jpg" } },
+            "tomato": { "Tomato Soup": { steps: "1. Saute onions and garlic.\n2. Add tomatoes and simmer.\n3. Blend and season.", image: "soup.jpg" }, "Bruschetta": { steps: "1. Toast bread.\n2. Mix tomatoes with garlic and basil.\n3. Top bread with mixture.", image: "bruschetta.jpg" } }
+        };
+        
+        function suggestRecipes() {
+            let ingredient = document.getElementById('ingredient').value.trim().toLowerCase();
+            let recipeList = document.getElementById('recipeList');
+            let recipeResult = document.getElementById('recipeResult');
+            let recipeSteps = document.getElementById('recipeSteps');
+            
+            recipeList.innerHTML = "";
+            recipeSteps.innerText = "";
+            
+            if (recipes[ingredient]) {
+                recipeResult.innerText = "Select a recipe:";
+                recipeList.style.display = "block";
+                
+                for (let recipe in recipes[ingredient]) {
+                    let option = document.createElement("option");
+                    option.value = recipe;
+                    option.textContent = recipe;
+                    recipeList.appendChild(option);
+                }
+                showRecipeDetails();
+            } else {
+                recipeResult.innerText = "No recipes found for this ingredient.";
+                recipeList.style.display = "none";
+            }
+        }
+        
+        function showRecipeDetails() {
+            let recipeName = document.getElementById('recipeList').value;
+            let ingredient = document.getElementById('ingredient').value.trim().toLowerCase();
+            let recipeSteps = document.getElementById('recipeSteps');
+            let recipeImage = document.getElementById('recipeImage');
+            
+            if (recipes[ingredient] && recipes[ingredient][recipeName]) {
+                recipeSteps.innerText = recipes[ingredient][recipeName].steps;
+                recipeImage.src = recipes[ingredient][recipeName].image;
+                recipeImage.style.display = "block";
+            }
+        }
+        
+        function showSuggestions(event) {
+            let input = event.target.value.toLowerCase();
+            let suggestions = document.getElementById('suggestions');
+            let availableIngredients = Object.keys(recipes);
+            let matches = availableIngredients.filter(ing => ing.startsWith(input));
+            suggestions.innerText = matches.length ? "Suggestions: " + matches.join(", ") : "";
+        }
+        
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
