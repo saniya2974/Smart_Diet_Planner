@@ -125,7 +125,7 @@ body, html {
 }
 
 body{
-    background-image: url("D:/Project2/Frontend/HTML/vege.jpg");
+    background-image: url("../HTML/vege.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed; 

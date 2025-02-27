@@ -4,7 +4,7 @@ let sidebar = document.querySelector(".sidebar");
 let recipe= document.querySelector(".recipe");
 
 recipe.addEventListener("click",function(){
-   window.location.href="D:/Project2/Frontend/HTML/Meal_planner.html";
+   window.location.href="../HTML/Meal_planner.html";
 });
 
 // to update dashboard greeting
@@ -22,11 +22,11 @@ function updateDashboardPicture() {
 
     if (profile && profile.gender) {
         if(profile.gender == "male"){
-        document.querySelector("#user img").src="D:/Project2/Frontend/HTML/img/man.jpg" ;
+        document.querySelector("#user img").src="../HTML/img/man.jpg" ;
         console.log("Male Picture updated");
         }
         else {
-            document.querySelector("#user img").src ="D:/Project2/Frontend/HTML/img/woman.png"; // Default for female
+            document.querySelector("#user img").src ="../HTML/img/woman.png"; // Default for female
         }
 }
 }

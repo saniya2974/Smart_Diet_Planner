@@ -3,7 +3,7 @@ let w=document.getElementById("weight");
 
 let home=document.getElementById("home");
 home.addEventListener('click',function(){
-    window.location.href="D:/Project2/Frontend/HTML/dash.html";
+    window.location.href="../HTML/dash.html";
 })
   // Utility function to show/hide elements
   function showElement(id) {
