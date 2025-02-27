@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="D:/Project2/Frontend/CSS/my_profile.css"/>
+</head>
+<body>
+    
+<div>
+    <div id='data' class="hide">
+        <h1>My Profile</h1>
+        <form>
+
+            <label for='name'>Name:</label>
+            <input type='text' id='name' name='name' placeholder="Eg. Sam">
+
+            <label for='age'>Age:</label>
+            <input type='number' id='age' name="age" placeholder="Eg. 20">
+
+            <label for='weight'>Weight (in kg):</label>
+            <input type='number' id='weight' placeholder="Eg. 45">
+
+            <label for='height'>Height (in cm):</label>
+            <input type='number' id='height' placeholder="Eg. 155">
+            
+            <div class="gen">
+            <label for="gender">Gender:</label>
+            <input type="radio" name="gender" id="male" value="male">
+            <label for="male"> Male</label>
+            <input type="radio" name="gender" id="female" value="female">
+            <label for="female">Female</label>
+            <input type="radio" name="gender" id="non-binary" value="non-binary">
+            <label for="non-binary">Non-Binary</label>
+            </div>
+
+            <label>Bodyfat:</label>
+            <div class="btn-group">
+                <input type="radio" id="low" name="bodyfat" value="low" checked>
+                <label for="low">Low</label>
+    
+                <input type="radio" id="medium" name="bodyfat" value="medium">
+                <label for="medium">Medium</label>
+        
+                <input type="radio" id="high" name="bodyfat" value="high">
+                <label for="high">High</label>
+            </div>
+
+            <label for="drop">Activity Level: &nbsp;</label>
+            <select name="drop" id="drop">
+                <option value="None"> --Please Choose an option-- </option>
+                <option value="low">Desk job, Light Exercise</option>
+                <option value="med">Workout 3-4 times/week</option>
+                <option value="high">Active daily, frequent exercise</option>
+            </select>
+
+            <label for="food"> Goal: &nbsp;</label>
+            <select name="goal-type" id="goal-type">
+                <option value="None"> --Please Choose an option-- </option>
+                <option value="lose">Lose Fat</option>
+                <option value="gain">Weight Gain</option>
+                <option value="build">Build muscle</option>
+            </select>
+
+            <button type="submit" id="sub">Save Profile</button>
+
+            
+        </form>
+    </div>
+
+    <div id='display' class="hide">
+
+        <!-- Profile display content -->
+         <h1>My Profile</h1>
+         <p id="Name"></p>
+         <p id="Age"></p>
+         <p id="Weight"></p>
+         <p id="Height"></p>
+         <p id="Gender"></p>
+         <p id="bodyfat"></p>
+         <p id="Activity"></p>
+         <p id="Goal"></p>
+         <p id="BMI"></p>
+         <button id="editBtn">Edit Profile</button>
+         <button id="home"> Back to 🏠 Home </button>
+    </div>
+</div>
+    <script src="D:/Project2/Frontend/JS/my_profile.js">
+    </script>
+</body>
+</html>

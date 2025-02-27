@@ -1,0 +1,136 @@
+body{
+    background-color:#181818 ;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+}
+
+p{
+    font-weight: lighter;
+    font-size:16px;
+}
+
+
+
+.heading{
+    margin-top: 30px;
+    text-align: center;
+    border:1px solid whitesmoke;
+    border-radius:5px;
+    box-shadow: 2px 2px 6px rgb(114, 111, 111);
+    width:600px;
+    transition: background 0.5s, transform 0.5s ease-in-out;
+}
+.heading:hover{
+    transform:scale(1.05);
+}
+
+
+.goal{
+    margin-top: 40px;
+    text-align: center;
+    border:1px solid whitesmoke;
+    border-radius:5px;
+    box-shadow: 2px 2px 6px rgb(114, 111, 111);
+    width:600px;
+    height:350px;
+    transition: background 0.5s, transform 0.5s ease-in-out;
+    display:flex;
+    flex-direction: column;
+}
+.goal:hover{
+    transform:scale(1.05);
+   
+}
+.goal input{
+    display:none;
+}
+.goal label{
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 5px;
+    background-color: #222;
+    color: white;
+    transition: background 0.3s;
+    display: inline-block; /* Ensures button-like appearance */
+    text-align: center;
+}
+.goal label:hover{
+    border:2px solid rgb(255, 153, 0);
+}
+.sel1{
+    margin-top:20px;
+    display:flex;
+    align-items: center;
+    gap: 15px; /* Adjust spacing between elements */
+    /* border-bottom: 1px solid rgb(118, 113, 113); */
+    border-radius: 5px;
+    justify-content: center;
+}
+.sel2{
+    margin-top: 20px;
+    display:flex;
+    align-items: center;
+    gap: 15px; /* Adjust spacing between elements */
+    justify-content: center;
+}
+.goal input:checked +label{
+    background-color: #be6308;
+    color: white;
+}
+
+.btn-group input{
+    display: none;
+}
+
+.btn-group label {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 5px;
+    background-color: #222;
+    color: white;
+    transition: background 0.3s;
+    display: inline-block; /* Ensures button-like appearance */
+    text-align: center;
+}
+
+.btn-group input:checked + label {
+    background-color: #be6308;
+    color: white;
+}
+
+.btn-group label:hover{
+    border:2px solid rgb(255, 153, 0);
+}
+
+.other{
+    padding:30px;
+    display: inline-block; /* Prevents layout shift */
+    transition: color 0.5s ease-in, background 0.5s ease-in, transform 0.3s ease-in;
+
+}
+.other:hover{
+    color:#be6308;
+    transform:scale(1.05);
+    
+}
+
+#next{
+    background-color:#be6308;
+    width:80px;
+    height:35px;
+    border:2px transparent;
+    color:white;
+    border-radius: 5px;
+    font-weight:bold; 
+    margin-top: 20px;
+   align-self: center;
+   cursor:grab;
+}

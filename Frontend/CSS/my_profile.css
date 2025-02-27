@@ -1,0 +1,115 @@
+#data{
+    margin:0 auto;
+    margin-top:30px;
+    width:700px;
+    height:800px;
+    border:2px solid rgb(241, 236, 236);
+    padding:10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px black;
+}
+.gen{
+    margin:5px;
+    margin-left:0;
+    display:inline-flex;
+}
+
+h1,h2{
+    text-align:center;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:10px;
+    padding-top:10px;
+}
+
+input[type='text'],input[type='number'], select, option{
+padding:10px;
+margin-left: 5px;
+width:90%;
+border:1px solid #ccc;
+border-radius:6px;
+}
+
+
+.btn-group input {
+    display:none;
+
+}
+.btn-group label {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 5px;
+    background-color: #222;
+    color: white;
+    transition: background 0.3s;
+    display: inline-block; /* Ensures button-like appearance */
+    text-align: center;
+}
+.btn-group input:checked + label {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#sub{
+    margin:20px;
+    display:block;
+    width:120px;
+    height:50px;
+    font-size:16px;
+    font-weight:bold;
+    background-color: #4CAF50;
+    border-radius: 10px;
+    color:whitesmoke;
+    border:2px solid white;
+}
+
+
+/* Display section css */
+#display{
+    width:600px;
+    margin:0 auto;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+}
+#display p{
+    font-weight: 500;
+}
+.hide{
+    display: none !important;
+}
+
+#editBtn{
+    background-color: #4CAF50;
+    margin:10px;
+    margin-right: 0;
+    display:block;
+    width:120px;
+    height:50px;
+    font-size:16px;
+    font-weight:bold;
+    border-radius: 10px;
+    color:whitesmoke;
+    border:2px solid white;
+}
+
+#home{
+    margin:0 auto;
+    display:block;
+    width:120px;
+    height:50px;
+    font-size:16px;
+    font-weight:bold;
+    bottom:20px;
+    border-radius: 10px;
+    background-color: wheat;
+    border:2px solid white;
+   
+}

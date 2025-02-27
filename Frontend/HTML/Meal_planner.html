@@ -90,6 +90,7 @@
         <img id="recipeImage" class="recipe-image" style="display: none;" />
         <p id="recipeResult"></p>
         <p id="recipeSteps"></p>
+        <button id="home"> Back to 🏠 Home </button>
     </div>
     <script>
         const recipes = {
@@ -128,6 +129,7 @@
             let ingredient = document.getElementById('ingredient').value.trim().toLowerCase();
             let recipeSteps = document.getElementById('recipeSteps');
             let recipeImage = document.getElementById('recipeImage');
+            let home=document.querySelector('#home');
             
             if (recipes[ingredient] && recipes[ingredient][recipeName]) {
                 recipeSteps.innerText = recipes[ingredient][recipeName].steps;
@@ -147,6 +149,11 @@
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
         }
+
+        
+        home.addEventListener("click",function(){
+            window.location.href="D:/Project2/Frontend/HTML/dash.html";
+        });
     </script>
 </body>
 </html>

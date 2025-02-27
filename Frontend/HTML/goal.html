@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UserGoal</title>
+    <link rel="stylesheet" href="D:/Project2/Frontend/CSS/goal.css" />
+
+</head>
+<body>
+    <div class="heading">
+        <h2>Are there any foods you prefer to avoid ? &#10060;</h2>
+        <p>Any food allergies, or something. </p>
+
+
+        <div class="btn-group">
+            <h2>Common Exclusions </h2>
+            <input type="radio" id="glu" name="exc" value="glut">
+            <label for="glu">Gluten</label>
+
+            <input type="radio" id="pea" name="exc" value="pea">
+            <label for="pea">Peanuts</label>
+    
+            <input type="radio" id="fish" name="exc" value="fish">
+            <label for="fish">Fish</label>
+
+            <input type="radio" id="dairy" name="exc" value="dairy">
+            <label for="dairy">Dairy</label>
+
+            <input type="radio" id="soy" name="exc" value="soy">
+            <label for="soy">Soy</label>
+        </div>
+
+        <div class="other">
+           <h3> Other Exclusions > </h3>
+        </div>
+    </div>
+
+        <div class="goal">
+            <h2>What is your goal? &#127919;</h2>
+            <p>It will help us recommend the perfect meals tailored to your goals! 🍽️✨ </p>
+            
+            <div class="sel1">
+            <p>Select a goal: </p>
+            <input type="radio" id="gen" name="goal" value="gen">
+            <label for="gen">General</label>
+
+            <input type="radio" id="exact" name="goal" value="exact">
+            <label for="exact">Exact Goal</label>
+            </div>
+
+            <div class="sel2">
+                <p>I want to: </p>
+                <input type="radio" id="loose" name="g" value="loose">
+                <label for="loose">Lose Fat</label>
+    
+                <input type="radio" id="gain" name="g" value="gain">
+                <label for="gain">Gain Weight</label>
+                
+                <input type="radio" id="build" name="g" value="build">
+                <label for="build">Build Muscle</label>
+                </div>
+                
+                
+        <button type="submit" id="next"> > Submit </a></button>
+
+        </div>
+
+
+    
+    <script>
+        let excl=document.querySelector(".other");
+        excl.addEventListener("click",function(){
+           
+            let inp=document.createElement("input");
+            inp.type="text";
+            inp.placeholder="Enter exclusion e.g. Egg";
+            inp.classList.add('exclusion');
+            inp.style.margin='20px';
+            inp.style.width='200px'
+            inp.style.backgroundColor='black';
+            inp.style.border='2px solid transparent';
+            inp.style.color='white';
+
+            let resetBtn = document.createElement("button");
+            resetBtn.textContent = "Reset";
+            resetBtn.style.marginLeft = "10px";
+            resetBtn.style.padding = "5px";
+            resetBtn.style.border = "1px solid white";
+            resetBtn.style.backgroundColor = "#be6308";
+            resetBtn.style.color = "white";
+            resetBtn.style.cursor = "pointer";
+        
+            excl.innerHTML = ""; // Clear previous content
+            excl.appendChild(inp);
+            excl.appendChild(resetBtn);
+            
+            inp.focus();
+
+            inp.addEventListener("blur", function() {  // hides input field
+                excl.innerHTML = "Other Exclusions >";
+
+                let enteredText = inp.value.trim();
+                if (enteredText !== "") {
+                    excl.innerHTML = `Other Exclusions: <strong>${enteredText}</strong>`;
+                } else {
+                    excl.innerHTML = "Other Exclusions >";
+                }
+            });
+
+                // Reset input when the button is clicked
+        resetBtn.addEventListener("click", function (e) {
+        e.stopPropagation(); // Prevent triggering the click event on .other
+        inp.value = "";
+        inp.focus();
+    });
+        });
+
+        let sub=document.querySelector("#next")
+        sub.addEventListener('click',function(event){
+            event.preventDefault();
+
+            let goal=document.querySelector('input[name="choose"]:checked')?.value || "General";
+            let exc =document.querySelector('input[name="choose"]:checked')?.value || "";
+            
+            let other=document.querySelector(".exclusion")?.value.trim();
+    
+    
+
+        
+        })
+
+
+
+    </script>
+</body>
+</html>

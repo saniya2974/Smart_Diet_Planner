@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Plan</title>
+    <link rel='stylesheet' href='D:/Project2/Frontend/CSS/meal.css' />
+</head>
+<body>
+    <div class="main">
+
+        <h2>What do you like to eat ?</h2>
+        <p>Choose from below. You can fine tune the excluded food later.</p>
+    </div>
+    <div class="choose">
+        <div class="option">
+            <input type="radio" id="any" name="choose" value="Anything" checked>
+            <label for="any">&#127789; Anything</label>
+            <p>Excludes: Nothing</p>
+        </div>
+
+        <div class="option">
+            <input type="radio" id="veg" name="choose" value="Veg">
+            <label for="veg">&#129361; Veg</label>
+            <p>Excludes: all Non-veg</p>
+        </div>
+
+        <div class="option">
+            <input type="radio" id="non-veg" name="choose" value="Non-veg">
+            <i class="fas fa-drumstick-bite"></i>
+            <label for="non-veg">&#127831; Non-Veg</label>
+            <p>Excludes: Nothing</p>
+        </div>
+
+        <div class="option">
+            <input type="radio" id="keto" name="choose" value="Keto">
+            <i class="fas fa-bacon"></i>
+            <label for="keto">&#129367; Keto</label>
+            <p>Excludes: Bread, rice, pasta, cereals, fruits (high in sugar)</p>
+        </div>
+
+        <div class="option">
+            <input type="radio" id="paleo" name="choose" value="Paleo">
+            <i class="fas fa-apple-alt"></i>
+            <label for="paleo">&#127830; Paleo</label>
+            <p>Excludes: Dairy, Grains, Legumes, Starchy-veges </p>
+        </div>
+
+        <button type="submit" id="next"> > Next </a></button>
+
+        <script>
+            let button=document.querySelector("#next");
+            button.addEventListener("click",function(event){
+                event.preventDefault();
+                let diet= document.querySelector('input[name="choose"]:checked')?.value || "Anything";
+                
+                localStorage.setItem('dietPref',diet);
+
+                // redirect to goal.html
+                window.location.href="D:/Project2/Frontend/HTML/goal.html";
+            });
+           
+        </script>
+
+    </body>
+</html>

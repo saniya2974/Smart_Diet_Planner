@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashBoard</title>
+    <link rel='stylesheet' href="D:/Project2/Frontend/CSS/dash.css" />
+</head>
+<body>
+    <nav class>
+        <div id="cont">
+            <img src="D:/Project2/Frontend/HTML/img/img.png.png" alt="Logo">
+            <a href="#">🏠Home</a>
+        </div> 
+      <div class="heading">
+        <h2 style="text-shadow:2px 2px 6px rgba(93, 91, 91, 0.657);">Welcome dear user!!</h2>
+        </div>
+        <div id="user">
+            <img src="D:/Project2/Frontend/HTML/img/woman.png" alt="User Profile">
+        </div>
+        
+        <button id="log-out"><b> 🔓 Log-out</b></button>
+    </nav>
+
+    <div class="container">
+        <button id="menu-btn" onclick="toggleMenu()"><b>☰ Menu</b></button>
+        <nav class="sidebar">
+            
+            <!-- <button id="close-btn" onclick="toggleMenu()">✖ Close</button> -->
+            
+            <a href="D:/Project2/Frontend/HTML/my_profile.html">👤 My Profile</a>
+            <a href="#">🥗 Meal Plans</a>
+            <a href="#">📉 My Progress Tracker</a>
+            <a href="#" class="recipe"> 📖 Meal Recipes</a>
+            <a href="#">🔥 Calorie Detector</a>
+    
+         </nav>
+      
+          <!-- Main Content (Big Partition) -->
+    <div class="dashboard">
+
+        <div class="meals">
+            <h2>Today's Meal Plan</h2>
+            <div class="meal">
+                <!-- Meal items here -->
+                <h3>🍹 Breakfast</h3>
+                <p>🥬 Very Green Veggie Protein Smoothie</p>
+                <p>🍓 Raspberry Yogurt Parfait</p>
+            </div>
+
+            <div class="meal">
+                <h3>🥪 Lunch</h3>
+                <p>🥑 Quick Avocado Tuna Sandwich</p>
+                <p>🥒 Cabbage Cucumber Salad</p>
+            </div>
+
+            <div class="meal">
+                <!-- Meal items here -->
+                <h3>🍽️Dinner</h3>
+                <p>🍳Egg omlette</p>
+                <p>🥛Milk</p>
+            </div>
+        </div>
+        <div class="nutrition">
+            <h2>Nutrition</h2>
+            <!-- Nutrition chart here -->
+        </div>
+    </div>
+    
+    
+        </div>
+        
+        <script src="D:/Project2/Frontend/JS/dash.js"></script>
+</body>
+</html>
