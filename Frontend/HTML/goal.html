@@ -94,7 +94,7 @@
             excl.innerHTML = ""; // Clear previous content
             excl.appendChild(inp);
             excl.appendChild(resetBtn);
-            
+
             inp.focus();
 
             inp.addEventListener("blur", function() {  // hides input field
@@ -108,7 +108,7 @@
                 }
             });
 
-                // Reset input when the button is clicked
+             // Reset input when the button is clicked
         resetBtn.addEventListener("click", function (e) {
         e.stopPropagation(); // Prevent triggering the click event on .other
         inp.value = "";
@@ -120,15 +120,38 @@
         sub.addEventListener('click',function(event){
             event.preventDefault();
 
-            let goal=document.querySelector('input[name="choose"]:checked')?.value || "General";
-            let exc =document.querySelector('input[name="choose"]:checked')?.value || "";
-            
-            let other=document.querySelector(".exclusion")?.value.trim();
+            let goal=document.querySelector('input[name="goal"]:checked')?.value || "General";
+            let target=document.querySelector('input[name="g"]:checked')?.value || "";
+           
+            let exc =document.querySelector('input[name="exc"]:checked')?.value || "";
+            let other=document.querySelector(".exclusion")?.value.trim() || "";
     
-    
+            let formData={
+                goal:goal,
+                exc:exc,
+                other:other,
+            };
 
-        
-        })
+            localStorage.setItem('userGoal',JSON.stringify(formData));
+            window.location.href="../HTML/dash.html";
+
+            
+             // Send data to backend for AI processing
+    fetch("http://127.0.0.1:5000/generate-diet", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData),
+    })
+    .then(response => response.json())
+    .then(data => {
+        localStorage.setItem("dietPlan", JSON.stringify(data)); // Save generated plan
+        window.location.href = "../HTML/dash.html"; // Redirect to dashboard
+    })
+    .catch(error => console.error("Error:", error));
+            
+        });
 
 
 

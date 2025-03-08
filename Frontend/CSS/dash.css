@@ -219,3 +219,25 @@ transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor:grab;
 }
 
+/* .meal {
+    background: #2a2a2a;
+    padding: 15px;
+    border-radius: 10px;
+    width: 30%;
+} */
+
+.meal ul {
+    list-style: none;
+    padding: 0;
+}
+
+.meal li {
+    margin: 10px 0;
+}
+
+.meal-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+
+}
