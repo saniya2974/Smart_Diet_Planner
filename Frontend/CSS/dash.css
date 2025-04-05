@@ -19,7 +19,7 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #4CAF50;
+    background-color: #75b239;
     top: 0;
     left: 0;
     gap:30px;
@@ -119,7 +119,7 @@ img {
 .sidebar.active {
     left: 0;
     border-top: 0;
-    background-color: #4CAF50;
+    background-color: #75b239;
     width:26%;
    
 }
@@ -139,6 +139,39 @@ img {
     margin-bottom: 10px;
     border-radius: 5px;
 }
+/* generate new meal button*/
+/* Generate New Plan Button */
+#gen {
+    position: absolute;  /* Absolute positioning inside .dashboard */
+    top: 200px;  /* Adjust vertical alignment */
+    right: 140px;  /* Align to the right */
+    padding: 12px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s, transform 0.2s;
+}
+
+/* Hover effect */
+#gen:hover {
+    background-color: #367c39;
+    transform: scale(1.05);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    #gen {
+        position: static;  /* Reset positioning */
+        display: block;
+        margin: 20px auto;  /* Center on smaller screens */
+        width: 80%;
+    }
+}
+
 
 /* Sidebar menu button (fixed & properly placed) */
 #menu-btn {
@@ -187,17 +220,17 @@ img {
     padding: 20px;
 }
 
-.meal h2, .nutrition h2 {
+/* .meal h2, .nutrition h2 {
     font-size: 25px;
 }
 
 .meal p {
     font-size: 20px;
     margin: 5px 0;
-}
+} */
 
 /* Card for meal plans */
-.meals{
+/* .meals{
 display: flex;
 flex-direction: column;
 margin:10px;
@@ -211,20 +244,107 @@ margin:20px;
 border-radius:10px;
 box-shadow: 2px 2px 7px black;
 transition: transform 0.3s ease, box-shadow 0.3s ease;
+}*/
+
+
+
+/* ✅ Container for meal plans */
+.meals {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    overflow: hidden;
+   /* align-items: center; /* Centers cards in the dashboard */
 }
-.meal:hover{
+
+/* ✅ Meal card */
+.meal {
+    width: 100%;
+    max-width: 450px; /* Adjusted width for better responsiveness */
+    height: auto;
+    border: 2px solid black;
+    margin: 20px;
+    padding: 15px; /* Added padding for better spacing */
+    border-radius: 10px;
+    box-shadow: 2px 2px 7px black;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers content inside the card */
+}
+
+/* ✅ Meal heading */
+.meal h2 {
+    font-size: 1.4em;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+/* ✅ Meal calories */
+.meal p {
+    font-size: 1em;
+    color: #555;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+/* ✅ Meal list */
+.meal-list {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+}
+
+/* ✅ Meal item */
+.meal-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 10px 0;
+    width: 100%;
+}
+
+/* ✅ Meal image */
+.meal-img {
+    width: 60px; /* Slightly larger for better visibility */
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid black; /* Added border for better visibility */
+}
+
+/* ✅ Meal text */
+.meal-text {
+    font-size: 1em;
+    color: #444;
+    text-align: left;
+    flex: 1;
+}
+
+/* ✅ Hover effect */
+.meal:hover {
     transform: scale(1.05); /* Slightly enlarges the card */
     box-shadow: 4px 4px 12px black; /* Enhances shadow effect */
     z-index: 10; /* Bring only the hovered card above */
-    cursor:grab;
+    cursor: grab;
 }
 
-/* .meal {
-    background: #2a2a2a;
-    padding: 15px;
-    border-radius: 10px;
-    width: 30%;
-} */
+/* ✅ Responsive Design */
+@media (max-width: 500px) {
+    .meal {
+        max-width: 95%;
+    }
+
+    .meal-img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+
+
 
 .meal ul {
     list-style: none;

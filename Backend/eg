@@ -1,0 +1,70 @@
+from flask import Flask, request, jsonify
+import json
+import openai  # Requires OpenAI API key
+
+app = Flask(__name__)
+
+# Set your OpenAI API key
+openai.api_key = "ddc-JjTG96pcoVKKDN6MslqRZZQcOB3XzSBnNaLmtClgfLLp9jll7w"
+
+@app.route("/generate-diet", methods=["POST"])
+def generate_diet():
+    data = request.json  # Receive user input from frontend
+
+    user_goal = data.get("goal", "general")
+    user_target = data.get("target", "")
+    exclusion = data.get("exclusion", "")
+
+    # Construct AI prompt
+    # prompt = f"""
+    # Create a 7-day meal plan for a person whose goal is '{user_goal}' and wants to '{user_target}'. 
+    # Exclude these foods: {exclusion}. The meal plan should include:
+    # - Breakfast (along with each food item showing present proteins, carbs, fats in it, along with recommend water intake in litres)
+    # - Lunch (along with each food item showing present proteins, carbs, fats in it, along with recommend water intake in litres)
+    # - Dinner (along with each food item showing present proteins, carbs, fats in it, along with water intake in litres)
+    # - Snacks (along with each food item showing present proteins, carbs, fats in it, along with water intake in litres)
+    # Provide a structured JSON output.
+    # """
+
+    prompt = f"""
+    Generate a structured **JSON meal plan** (without extra text) for a person whose goal is **{user_goal}** 
+    and wants to **{user_target}**. Avoid: {exclusion}. 
+    The response should be a JSON object with:
+    
+    {{
+      "Breakfast": {{
+          "calories": (integer),
+          "items": [
+              {{"name": (string), "image": (string URL), "servings": (integer)}}
+          ]
+      }},
+      "Lunch": {{
+          "calories": (integer),
+          "items": [
+              {{"name": (string), "image": (string URL), "servings": (integer)}}
+          ]
+      }},
+      "Dinner": {{
+          "calories": (integer),
+          "items": [
+              {{"name": (string), "image": (string URL), "servings": (integer)}}
+          ]
+      }}
+    }}
+    Ensure this JSON is valid, properly structured, and does not contain additional explanations.
+    """
+
+    # Call OpenAI API (GPT-4)
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[{"role": "system", "content": "You are a professional dietitian."},
+                  {"role": "user", "content": prompt}]
+    )
+
+    # Extract AI response
+    diet_plan = response["choices"][0]["message"]["content"]
+
+    return jsonify({"dietPlan": diet_plan})
+
+if __name__ == "__main__":
+    app.run(debug=True)

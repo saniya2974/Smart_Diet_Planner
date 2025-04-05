@@ -120,7 +120,7 @@ edit.addEventListener('click',function(){
         showElement('data');
         hideElement('display');
 });
-
+export{BMI};
 // Load the profile on page load
 window.onload = load;
 

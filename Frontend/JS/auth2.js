@@ -25,7 +25,7 @@ authForm.addEventListener('submit', async (e) => {
     const username = usernameField.value;
     const isSignup = formTitle.innerText === "Sign Up";
 
-    const endpoint = isSignup ? 'http://localhost:3000/signup' : 'http://localhost:3000/login';
+    const endpoint = isSignup ? 'http://localhost:5500/signup' : 'http://localhost:5500/login';
     const data = isSignup ? { username, email, password } : { email, password };
 
     try {
@@ -39,7 +39,7 @@ authForm.addEventListener('submit', async (e) => {
 
         if (response.ok) {
             const message = await response.text();
-            alert(message);
+            // alert(message);
 
             if (isSignup) {
                 toggleForm();  // Switch to login form on successful signup
@@ -49,10 +49,10 @@ authForm.addEventListener('submit', async (e) => {
             }
         } else {
             const error = await response.text();
-            alert(error);
+            // alert(error);
         }
     } catch (err) {
         console.error('Error:', err);
-        alert('An error occurred. Please try again later.');
+        // alert('An error occurred. Please try again later.');
     }
 });

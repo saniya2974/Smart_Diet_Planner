@@ -15,24 +15,25 @@
 
         <div class="btn-group">
             <h2>Common Exclusions </h2>
-            <input type="radio" id="glu" name="exc" value="glut">
+            <input type="checkbox" id="glu" name="exc" value="glut">
             <label for="glu">Gluten</label>
 
-            <input type="radio" id="pea" name="exc" value="pea">
+            <input type="checkbox" id="pea" name="exc" value="pea">
             <label for="pea">Peanuts</label>
     
-            <input type="radio" id="fish" name="exc" value="fish">
+            <input type="checkbox" id="fish" name="exc" value="fish">
             <label for="fish">Fish</label>
 
-            <input type="radio" id="dairy" name="exc" value="dairy">
+            <input type="checkbox" id="dairy" name="exc" value="dairy">
             <label for="dairy">Dairy</label>
 
-            <input type="radio" id="soy" name="exc" value="soy">
+            <input type="checkbox" id="soy" name="exc" value="soy">
             <label for="soy">Soy</label>
         </div>
 
         <div class="other">
            <h3> Other Exclusions > </h3>
+           <div id="exclusion-list"></div> <!--dynamic exclusions list-->
         </div>
     </div>
 
@@ -69,19 +70,33 @@
 
     
     <script>
-        let excl=document.querySelector(".other");
-        excl.addEventListener("click",function(){
-           
-            let inp=document.createElement("input");
-            inp.type="text";
-            inp.placeholder="Enter exclusion e.g. Egg";
-            inp.classList.add('exclusion');
-            inp.style.margin='20px';
-            inp.style.width='200px'
-            inp.style.backgroundColor='black';
-            inp.style.border='2px solid transparent';
-            inp.style.color='white';
-
+        let excl = document.querySelector(".other");
+        let exclusionList = document.createElement("p"); // Create a separate element for displaying exclusions
+        excl.appendChild(exclusionList); // Append it inside "Other Exclusions"
+        let exclusions = [];
+        
+        excl.addEventListener("click", function () {
+            if (document.querySelector(".exclusion-input")) return; // Prevent duplicate input fields
+        
+            let inp = document.createElement("input");
+            inp.type = "text";
+            inp.placeholder = "Enter exclusion e.g. Egg";
+            inp.classList.add("exclusion-input");
+            inp.style.margin = "10px";
+            inp.style.width = "200px";
+            inp.style.backgroundColor = "black";
+            inp.style.border = "2px solid transparent";
+            inp.style.color = "white";
+        
+            let addBtn = document.createElement("button");
+            addBtn.textContent = "➕";
+            addBtn.style.marginLeft = "10px";
+            addBtn.style.padding = "5px";
+            addBtn.style.border = "1px solid white";
+            addBtn.style.backgroundColor = "#2a9d8f";
+            addBtn.style.color = "white";
+            addBtn.style.cursor = "pointer";
+        
             let resetBtn = document.createElement("button");
             resetBtn.textContent = "Reset";
             resetBtn.style.marginLeft = "10px";
@@ -91,64 +106,71 @@
             resetBtn.style.color = "white";
             resetBtn.style.cursor = "pointer";
         
-            excl.innerHTML = ""; // Clear previous content
             excl.appendChild(inp);
+            excl.appendChild(addBtn);
             excl.appendChild(resetBtn);
-
+        
             inp.focus();
-
-            inp.addEventListener("blur", function() {  // hides input field
-                excl.innerHTML = "Other Exclusions >";
-
+        
+            addBtn.addEventListener("click", function () {
                 let enteredText = inp.value.trim();
-                if (enteredText !== "") {
-                    excl.innerHTML = `Other Exclusions: <strong>${enteredText}</strong>`;
-                } else {
-                    excl.innerHTML = "Other Exclusions >";
+                if (enteredText !== "" && !exclusions.includes(enteredText)) {
+                    exclusions.push(enteredText);
+                    inp.value = "";
+                    updateExclusionList();
                 }
             });
-
-             // Reset input when the button is clicked
-        resetBtn.addEventListener("click", function (e) {
-        e.stopPropagation(); // Prevent triggering the click event on .other
-        inp.value = "";
-        inp.focus();
-    });
+        
+            resetBtn.addEventListener("click", function (e) {
+                e.stopPropagation();
+                exclusions = []; // Clear stored exclusions
+                updateExclusionList();
+                inp.value = "";
+            });
         });
+        
+        function updateExclusionList() {
+            exclusionList.innerHTML =
+                exclusions.length > 0 ? `<strong></strong> ${exclusions.join(", ")}` : "";
+        }
+        
 
-        let sub=document.querySelector("#next")
-        sub.addEventListener('click',function(event){
+        document.querySelector("#next").addEventListener("click", function (event) {
             event.preventDefault();
 
-            let goal=document.querySelector('input[name="goal"]:checked')?.value || "General";
-            let target=document.querySelector('input[name="g"]:checked')?.value || "";
-           
-            let exc =document.querySelector('input[name="exc"]:checked')?.value || "";
-            let other=document.querySelector(".exclusion")?.value.trim() || "";
-    
-            let formData={
-                goal:goal,
-                exc:exc,
-                other:other,
+            let goal = document.querySelector('input[name="goal"]:checked')?.value || "General";
+            let target = document.querySelector('input[name="g"]:checked')?.value || "";
+            let commonExclusions = Array.from(document.querySelectorAll('input[name="exc"]:checked')).map(e => e.value);
+
+            let formData = {
+                goal: goal,
+                target: target,
+                commonExclusions: commonExclusions,
+                otherExclusions: exclusions
             };
 
             localStorage.setItem('userGoal',JSON.stringify(formData));
-            window.location.href="../HTML/dash.html";
+            //window.location.href="../HTML/dash.html";
 
             
              // Send data to backend for AI processing
-    fetch("http://127.0.0.1:5000/generate-diet", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData),
-    })
-    .then(response => response.json())
-    .then(data => {
-        localStorage.setItem("dietPlan", JSON.stringify(data)); // Save generated plan
-        window.location.href = "../HTML/dash.html"; // Redirect to dashboard
-    })
+             fetch("http://127.0.0.1:5000/generate-diet", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("🔹 API Response Received:", data);
+                if (data.dietPlan) {
+                    localStorage.setItem("dietPlan", JSON.stringify(data.dietPlan));
+                    setTimeout(() => {
+                        window.location.href = "../HTML/dash.html"; // Redirect only after saving
+                    }, 500);
+                } else {
+                    console.error("❌ Error: No diet plan received from API.");
+                }
+            })
     .catch(error => console.error("Error:", error));
             
         });

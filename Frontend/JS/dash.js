@@ -1,3 +1,24 @@
+document.addEventListener("DOMContentLoaded", async () => {
+    updateDashboardGreeting();
+    updateDashboardPicture();
+
+    // Load stored meal plan if available before fetching a new one
+    updateMealPlan();
+
+      // ✅ Fetch new meal plan only when clicking "Generate New Plan"
+      const genButton= document.getElementById("gen")
+      if (genButton) {
+        genButton.addEventListener("click", async () => {
+            console.log("🔄 'Generate New Plan' button clicked...");
+            await fetchMealPlan();  // Fetch new meal plan
+        });
+    } else {
+        console.error("❌ 'Generate New Plan' button not found!");
+    }
+
+});
+
+
 let menu = document.querySelector("#menu-btn");
 let sidebar = document.querySelector(".sidebar");
 let recipe = document.querySelector(".recipe");
@@ -56,27 +77,44 @@ menu.addEventListener("click", function () {
 
 // Function to generate meal sections
 function generateMeal(mealType, mealData) {
-    if (!mealData) return '<div class="meal"><h2>' + mealType + '</h2><p>No plans to show</p></div>';
+    if (!mealData) return `<div class="meal"><h2>${mealType}</h2><p>No plans to show</p></div>`;
 
     return `
         <div class="meal">
             <h2>${mealType}</h2>
-            <p>${mealData.calories} Calories</p>
-            <ul>
+            <p><b>${mealData.calories} Calories</b></p>
+            <ul class="meal-list">
                 ${mealData.items.map(item => `
-                    <li>
-                        <img src="${item.image}" alt="${item.name}" class="meal-image">
-                        <strong>${item.name}</strong> - ${item.servings} servings
+                    <li class="meal-item">
+                        <img src="${item.image}" alt="${item.name}" class="meal-img">
+                        <div class="meal-text">
+                            <strong>${item.name}</strong> - ${item.servings} servings
+                        </div>
                     </li>`).join('')}
             </ul>
         </div>
     `;
 }
 
+
 // Function to update UI with the stored meal plan
 function updateMealPlan() {
     let dietPlan = JSON.parse(localStorage.getItem("dietPlan")) || {};
+    console.log("🔹 Updating UI with Diet Plan:", dietPlan); // Debugging log
+   
+    if (!dietPlan || Object.keys(dietPlan).length === 0) {
+        console.error("❌ No meal plan found in localStorage!");
+        return;
+    }
+
+    //let mealCont = document.querySelector(".meals");
+    if (!mealCont) {
+        console.error("❌ Meal container not found in HTML!");
+        return;
+    }
+   
     mealCont.innerHTML = `
+      <h2>Today's Meal Plan</h2>
         ${generateMeal("Breakfast", dietPlan.Breakfast)}
         ${generateMeal("Lunch", dietPlan.Lunch)}
         ${generateMeal("Dinner", dietPlan.Dinner)}
@@ -86,6 +124,31 @@ function updateMealPlan() {
 
 async function fetchMealPlan() {
     try {
+        
+       // ✅ Retrieve user data from localStorage
+       const userGoals = JSON.parse(localStorage.getItem("userGoal")) || {};
+       const userProfile = JSON.parse(localStorage.getItem("userProfile")) || {};
+       const dietPref = localStorage.getItem("dietPref") || "Anything";
+
+       
+       if (!userProfile) {
+        console.error("❌ No user profile found!");
+        return;
+    }
+
+    //const bmiData = BMI(userProfile.weight, userProfile.height);
+
+            // check if exclusions are available
+            const target = userGoals.target || "reduce fat";  // Default target
+            const commonExclusions = userGoals.commonExclusions || "sugar, junk food";  
+            const otherExclusions = userGoals.otherExclusions || ""; 
+
+            console.log("🔹 Sending Request to API with:", {
+                target, exclusion: commonExclusions, otherExc: otherExclusions,
+                goal: userProfile.goal, bodyFat: userProfile["body-fat"],
+                activity: userProfile.activity, dietPref: dietPref
+            });
+
         let response = await fetch("http://127.0.0.1:5000/generate-diet", {
             method: "POST",
             headers: {
@@ -93,11 +156,17 @@ async function fetchMealPlan() {
                 "Accept": "application/json"
             },
             body: JSON.stringify({
-                goal: "weight loss", 
-                target: "reduce fat",
-                exclusion: "sugar, junk food"
+                target: target,
+                exclusion: commonExclusions,
+                otherExc: otherExclusions,
+                goal: userProfile.goal,
+               // bmi: bmiData.bmi,
+                bodyFat: userProfile["body-fat"],
+                activity: userProfile.activity,
+                dietPref: dietPref
             })
         });
+        console.log("Other Exclusions:", userGoals.otherExclusions);
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -116,9 +185,9 @@ async function fetchMealPlan() {
     }
 }
 
-// Call the function on page load
-window.onload = function(){
-    updateDashboardGreeting();
-    updateDashboardPicture();
-    fetchMealPlan(); 
-};
+// // Call the function on page load
+// window.onload = function(){
+//     updateDashboardGreeting();
+//     updateDashboardPicture();
+//     fetchMealPlan(); 
+// };
