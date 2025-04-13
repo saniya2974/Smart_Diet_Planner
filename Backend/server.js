@@ -24,6 +24,10 @@ async function connectToDB() {
     return client.db("User_data").collection("users");
 }
 
+async function connectToUserDetails() {
+    await client.connect();
+    return client.db("User_data").collection("user_details");
+}
 
 // Signup endpoint
 app.post('/signup', async (req, res) => {
@@ -50,6 +54,19 @@ app.post('/login', async (req, res) => {
     }
 
     res.status(401).send('Invalid email or password!');
+});
+
+app.post('/save_profile', async (req, res) => {
+    const profileData = req.body;
+    const userDetailsCollection = await connectToUserDetails();
+
+    try {
+        await userDetailsCollection.insertOne(profileData);
+        res.status(200).json({ message: "Profile saved to user_details collection!" });
+    } catch (err) {
+        console.error("Error saving profile:", err);
+        res.status(500).json({ error: "Failed to save profile" });
+    }
 });
 
 // Start the server
