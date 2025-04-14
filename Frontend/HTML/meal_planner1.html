@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Finder</title>
+    <link rel="stylesheet" href="../CSS/meal_planner.css"/>
+</head>
+<body>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    <div class="logo">Recipe Finder</div>
+    <div class="search-container">
+        <input type="text" id="ingredient" placeholder="Enter an ingredient" onkeyup="showSuggestions(event)" onkeypress="if(event.key === 'Enter') suggestRecipes()">
+        <div id="suggestions" style="text-align: left; font-size: 14px; color: gray;"></div>
+        <div class="buttons">
+            <button onclick="suggestRecipes()">Find Recipes</button>
+        </div>
+        <select id="recipeList" onchange="showRecipeDetails()" style="display: none;"></select>
+        <img id="recipeImage" class="recipe-image" style="display: none;" />
+        <p id="recipeResult"></p>
+        <p id="recipeSteps"></p>
+        <button id="home"> Back to 🏠 Home </button>
+    </div>
+    <script src="../JS/meal_planner.js"></script>
+</body>
+</html>

@@ -3,6 +3,8 @@ const usernameField = document.getElementById('username');
 const toggleText = document.querySelector('.toggle');
 const authForm = document.getElementById('authForm');
 
+port = 3000
+
 // Toggle between Login and Sign Up forms
 function toggleForm() {
     if (formTitle.innerText === "Login") {
@@ -25,7 +27,7 @@ authForm.addEventListener('submit', async (e) => {
     const username = usernameField.value;
     const isSignup = formTitle.innerText === "Sign Up";
 
-    const endpoint = isSignup ? 'http://localhost:5500/signup' : 'http://localhost:5500/login';
+    const endpoint = isSignup ? `http://localhost:${port}/signup` : `http://localhost:${port}/login`;
     const data = isSignup ? { username, email, password } : { email, password };
 
     try {
@@ -38,21 +40,25 @@ authForm.addEventListener('submit', async (e) => {
         });
 
         if (response.ok) {
-            const message = await response.text();
-            // alert(message);
-
             if (isSignup) {
                 toggleForm();  // Switch to login form on successful signup
             } else {
-                // Redirect to dashboard on successful login
-                window.location.href = "../HTML/dash.html";
+                // Check if admin
+                if (
+                    email === "admin@gmail.com" &&
+                    password === "admin@123"
+                ) {
+                    window.location.href = "../HTML/admin_user_list.html";
+                } else {
+                    window.location.href = "../HTML/dash.html";
+                }
             }
         } else {
             const error = await response.text();
-            // alert(error);
+            console.error("Error:", error);
         }
     } catch (err) {
         console.error('Error:', err);
-        // alert('An error occurred. Please try again later.');
     }
 });
+
