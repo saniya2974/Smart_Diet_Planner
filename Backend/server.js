@@ -2,8 +2,14 @@ const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const cors = require('cors');
 
+require('dotenv').config();
+
+const Groq = require("groq-sdk");
+
 const app = express();
 const port = 3000;
+
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 app.use(cors());
 app.use(express.json());
@@ -68,6 +74,49 @@ app.post('/save_profile', async (req, res) => {
         res.status(500).json({ error: "Failed to save profile" });
     }
 });
+
+app.get('/users', async (req, res) => {
+    try {
+        const usersCollection = await connectToDB();
+        const users = await usersCollection.find({}).toArray();
+        res.status(200).json(users);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving users');
+    }
+});
+
+app.post('/', async (req, res) => {
+    const dish = req.body.dish;
+  
+    if (!dish) {
+      return res.status(400).json({ error: "Dish name is required" });
+    }
+  
+    try {
+      const completion = await groq.chat.completions.create({
+        messages: [
+          {
+            role: "system",
+            content: `You are a professional chef who provides easy-to-follow, step-by-step recipes for a wide range of global dishes. Your instructions should be clear, beginner-friendly, and include ingredients, quantities, and cooking time.`
+          },
+          {
+            role: "user",
+            content: `Please provide a detailed recipe for making "${dish}". Include ingredients and cooking steps.`
+          }
+        ],
+        model: "llama-3.3-70b-versatile", // or "llama-3-70b"
+      });
+  
+      const recipeText = completion.choices[0]?.message?.content || "No recipe found.";
+      res.json({ recipe: recipeText });
+  
+    } catch (error) {
+      console.error("Groq API error:", error);
+      res.status(500).json({ error: "Failed to generate recipe." });
+    }
+  });
+  
 
 // Start the server
 app.listen(port, () => {
