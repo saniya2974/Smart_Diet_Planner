@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dish Nutrition Analysis</title>
+  <link rel="stylesheet" href="../CSS/nutrition.css" />
+</head>
+
+<body>
+  <div class="container">
+    <h1>🍽️ Dish Nutrition Analyzer</h1>
+    <p>Paste a food image URL or scan using your webcam:</p>
+
+    <div class="input-container">
+      <input type="text" id="imageUrl" placeholder="Paste image URL here..." />
+      <button onclick="fetchNutrition()">Analyze Nutrition</button>
+      <button onclick="startCamera()">📷 Use Webcam</button>
+    </div>
+
+    <!-- Webcam Preview -->
+    <div id="webcamContainer" style="display: none; text-align: center;">
+      <video id="video" autoplay playsinline width="300"></video>
+      <br>
+      <button onclick="captureImage()">📸 Capture</button>
+    </div>
+
+    <!-- Hidden Canvas for Snapshot -->
+    <canvas id="canvas" style="display: none;"></canvas>
+
+    <div id="loading" class="loading" style="display: none;">⏳ Analyzing the dish...</div>
+
+    <div id="nutritionResult" class="result" style="display: none;">
+      <div id="nutritionDetails" class="nutrition-details"></div>
+    </div>
+
+    <div class="nav-buttons">
+      <button id="home">🏠 Back to Home</button>
+    </div>
+  </div>
+
+  <script src="../JS/nutrition.js"></script>
+</body>
+</html>

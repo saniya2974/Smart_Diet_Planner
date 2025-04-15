@@ -1,0 +1,161 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    min-height: 100vh;
+    display: block;
+    padding: 2rem 1rem;
+  }
+  
+  /* Container */
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  /* Header */
+  h1 {
+    color: #007bff;
+    font-size: 2em;
+    margin-bottom: 15px;
+  }
+  
+  p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  }
+  
+  /* Input Section */
+  .input-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 2rem;
+  }
+  
+  input[type="text"] {
+    flex: 1;
+    min-width: 240px;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Webcam Preview */
+  #webcamContainer {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  video {
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  /* Hidden Canvas */
+  #canvas {
+    display: none;
+  }
+  
+  /* Loading Indicator */
+  .loading {
+    margin-top: 1rem;
+    font-weight: bold;
+    text-align: center;
+    color: #007bff;
+  }
+  
+  /* Result Section */
+  #nutritionResult {
+    margin-top: 2rem;
+    display: none;
+  }
+  
+  /* Nutrition Card */
+  .nutrition-card {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: left;
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  .nutrition-card h3 {
+    color: #2c3e50;
+    margin-bottom: 0.75em;
+  }
+  
+  .nutrition-card h4 {
+    margin-top: 1em;
+    color: #16a085;
+  }
+  
+  .nutrition-card ul {
+    padding-left: 1.2rem;
+    list-style-type: disc;
+  }
+  
+  .nutrition-card li {
+    margin-bottom: 0.5em;
+  }
+  
+  .nutrition-card strong {
+    color: #e67e22;
+  }
+  
+  /* Additional Nutrition Content Styling */
+  .nutrition-content strong {
+    color: #d23f57;
+    font-weight: 600;
+  }
+  
+  .nutrition-content p {
+    margin-bottom: 1rem;
+  }
+  
+  .nutrition-content ul {
+    margin-top: 1rem;
+    padding-left: 1.2rem;
+  }
+  
+  .nutrition-content li {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  /* Navigation Buttons */
+  .nav-buttons {
+    margin-top: 2rem;
+  }
+  
