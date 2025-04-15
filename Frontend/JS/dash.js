@@ -5,9 +5,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Load stored meal plan if available before fetching a new one
     updateMealPlan();
 
-      // ✅ Fetch new meal plan only when clicking "Generate New Plan"
-      const genButton= document.getElementById("gen")
-      if (genButton) {
+    // ✅ Fetch new meal plan only when clicking "Generate New Plan"
+    const genButton = document.getElementById("gen");
+    if (genButton) {
         genButton.addEventListener("click", async () => {
             console.log("🔄 'Generate New Plan' button clicked...");
             await fetchMealPlan();  // Fetch new meal plan
@@ -16,6 +16,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error("❌ 'Generate New Plan' button not found!");
     }
 
+    const logoutBtn = document.getElementById("log-out");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            console.log("🚪 Logging out...");
+            localStorage.clear();  // Clear all stored user data
+
+            // Optional: confirmation before redirecting
+            alert("You have been logged out.");
+            window.location.href = "../HTML/Login_page.html";  // Redirect to login page
+        });
+    } else {
+        console.error("❌ Log-out button not found!");
+    }
 });
 
 
@@ -25,9 +38,8 @@ let recipe = document.querySelector(".recipe");
 let mealCont = document.querySelector(".meals");
 
 
-recipe.addEventListener("click",function(){
-   window.location.href="../HTML/Meal_planner.html";
-
+recipe.addEventListener("click", function () {
+    window.location.href = "../HTML/Meal_planner.html";
 });
 
 // Update dashboard greeting
@@ -45,12 +57,11 @@ function updateDashboardPicture() {
     const profile = JSON.parse(localStorage.getItem("userProfile"));
 
     if (profile && profile.gender) {
-        if(profile.gender == "male"){
-        document.querySelector("#user img").src="../HTML/img/man.jpg" ;
-        console.log("Male Picture updated");
-        }
-        else {
-            document.querySelector("#user img").src ="../HTML/img/woman.png"; // Default for female
+        if (profile.gender == "male") {
+            document.querySelector("#user img").src = "../HTML/img/man.jpg";
+            console.log("Male Picture updated");
+        } else {
+            document.querySelector("#user img").src = "../HTML/img/woman.png"; // Default for female
         }
     }
 }
@@ -96,25 +107,23 @@ function generateMeal(mealType, mealData) {
     `;
 }
 
-
 // Function to update UI with the stored meal plan
 function updateMealPlan() {
     let dietPlan = JSON.parse(localStorage.getItem("dietPlan")) || {};
-    console.log("🔹 Updating UI with Diet Plan:", dietPlan); // Debugging log
-   
+    console.log("🔹 Updating UI with Diet Plan:", dietPlan);
+
     if (!dietPlan || Object.keys(dietPlan).length === 0) {
         console.error("❌ No meal plan found in localStorage!");
         return;
     }
 
-    //let mealCont = document.querySelector(".meals");
     if (!mealCont) {
         console.error("❌ Meal container not found in HTML!");
         return;
     }
-   
+
     mealCont.innerHTML = `
-      <h2>Today's Meal Plan</h2>
+        <h2>Today's Meal Plan</h2>
         ${generateMeal("Breakfast", dietPlan.Breakfast)}
         ${generateMeal("Lunch", dietPlan.Lunch)}
         ${generateMeal("Dinner", dietPlan.Dinner)}
@@ -124,30 +133,24 @@ function updateMealPlan() {
 
 async function fetchMealPlan() {
     try {
-        
-       // ✅ Retrieve user data from localStorage
-       const userGoals = JSON.parse(localStorage.getItem("userGoal")) || {};
-       const userProfile = JSON.parse(localStorage.getItem("userProfile")) || {};
-       const dietPref = localStorage.getItem("dietPref") || "Anything";
+        const userGoals = JSON.parse(localStorage.getItem("userGoal")) || {};
+        const userProfile = JSON.parse(localStorage.getItem("userProfile")) || {};
+        const dietPref = localStorage.getItem("dietPref") || "Anything";
 
-       
-       if (!userProfile) {
-        console.error("❌ No user profile found!");
-        return;
-    }
+        if (!userProfile) {
+            console.error("❌ No user profile found!");
+            return;
+        }
 
-    //const bmiData = BMI(userProfile.weight, userProfile.height);
+        const target = userGoals.target || "reduce fat";
+        const commonExclusions = userGoals.commonExclusions || "sugar, junk food";
+        const otherExclusions = userGoals.otherExclusions || "";
 
-            // check if exclusions are available
-            const target = userGoals.target || "reduce fat";  // Default target
-            const commonExclusions = userGoals.commonExclusions || "sugar, junk food";  
-            const otherExclusions = userGoals.otherExclusions || ""; 
-
-            console.log("🔹 Sending Request to API with:", {
-                target, exclusion: commonExclusions, otherExc: otherExclusions,
-                goal: userProfile.goal, bodyFat: userProfile["body-fat"],
-                activity: userProfile.activity, dietPref: dietPref
-            });
+        console.log("🔹 Sending Request to API with:", {
+            target, exclusion: commonExclusions, otherExc: otherExclusions,
+            goal: userProfile.goal, bodyFat: userProfile["body-fat"],
+            activity: userProfile.activity, dietPref: dietPref
+        });
 
         let response = await fetch("http://127.0.0.1:5000/generate-diet", {
             method: "POST",
@@ -160,12 +163,12 @@ async function fetchMealPlan() {
                 exclusion: commonExclusions,
                 otherExc: otherExclusions,
                 goal: userProfile.goal,
-               // bmi: bmiData.bmi,
                 bodyFat: userProfile["body-fat"],
                 activity: userProfile.activity,
                 dietPref: dietPref
             })
         });
+
         console.log("Other Exclusions:", userGoals.otherExclusions);
 
         if (!response.ok) {
@@ -173,10 +176,10 @@ async function fetchMealPlan() {
         }
 
         let data = await response.json();
-        
+
         if (data.dietPlan) {
-            localStorage.setItem("dietPlan", JSON.stringify(data.dietPlan)); // Store data
-            updateMealPlan();  // Call function to update UI
+            localStorage.setItem("dietPlan", JSON.stringify(data.dietPlan));
+            updateMealPlan();
         } else {
             console.error("❌ Error: No meal plan received", data);
         }
@@ -184,10 +187,3 @@ async function fetchMealPlan() {
         console.error("❌ Failed to fetch meal plan:", error);
     }
 }
-
-// // Call the function on page load
-// window.onload = function(){
-//     updateDashboardGreeting();
-//     updateDashboardPicture();
-//     fetchMealPlan(); 
-// };
